@@ -117,12 +117,12 @@ app.use(express.static(path.resolve(__dirname, "www")));
 // app.set('port', process.env.PORT || 5000);
 const port = process.env.PORT || 5000;
 
-const server = http.createServer(app);
-server.on("error", onError);
-server.on("listening", onListening);
-server.listen(port);
+// const server = http.createServer(app);
+// server.on("error", onError);
+// server.on("listening", onListening);
+// server.listen(port);
 
 // // http.createServer(app , function() {}).listen(port);
-// app.listen(port ,function () {
-//   console.log("Express server listening on port " + port);
-// });
+app.listen(port ,function () {
+  console.log("Express server listening on port " + port);
+});
