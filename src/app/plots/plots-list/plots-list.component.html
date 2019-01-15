@@ -1,5 +1,5 @@
 <ion-list *ngIf="plots.length > 0">
-  <ion-item-sliding *ngFor="let plot of plots">
+  <!-- <ion-item-sliding *ngFor="let plot of plots">
     <ion-item>
       <ion-label>{{ plot.plotName }}</ion-label>
     </ion-item>
@@ -17,6 +17,27 @@
         Delete
       </ion-item-option>
     </ion-item-options>
-  </ion-item-sliding>
+  </ion-item-sliding> -->
+  <ion-card *ngFor="let plot of plots">
+    <ion-card-header>
+      <ion-card-title>
+        {{ plot.plotName }}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="card-buttons">
+      <ion-button size="small" fill="outline" (click)="onTagPlot(plot.id)">
+        <ion-icon name="map"></ion-icon>
+        Tag
+      </ion-button>
+      <ion-button size="small" fill="outline" color="success" (click)="onAddPlot(plot.id)">
+        <ion-icon name="add"></ion-icon>
+        Add
+      </ion-button>
+      <ion-button size="small" fill="outline" color="danger" (click)="deletePlot(plot.id)">
+        <ion-icon name="trash"></ion-icon>
+        Delete
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-list>
 <p class="info-text" *ngIf="plots.length <= 0">No Plots Added Yet!</p>

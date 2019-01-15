@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControl, FormGroup, Validators, RequiredValidator } from '@angular/forms';
 import { PlotService } from '../../../services/plot.service';
+import { PlotValidator } from './plots.validator';
 
 @Component({
   selector: 'app-plots-create',
@@ -11,20 +12,31 @@ export class PlotsCreateComponent implements OnInit {
 
   constructor(public plotService: PlotService) { }
 
-  plotName: string;
+  validation_messages = {
+    'plotName': [
+      {type: 'required', message: 'Please enter Plot Name'}
+    ]
+  };
+
+  // plotName: string;
+  plotForm = new FormGroup({
+    plotName: new FormControl('', Validators.compose([
+      PlotValidator.validPlotname,
+      Validators.required,
+    ])
+    ),
+  });
 
   ngOnInit() {
   }
 
-  onAddPlot(form: NgForm) {
+  onAddPlot() {
 
-    // if (form.invalid) {
-    //   return;
-    // }
-
-    console.log(this.plotName);
-    this.plotService.addPlot(this.plotName);
+    // console.log(this.plotForm.get('plotName').value);
+    this.plotService.addPlot(this.plotForm.get('plotName').value);
     // form.resetForm();
+
+    this.plotForm.reset();
   }
 
 }

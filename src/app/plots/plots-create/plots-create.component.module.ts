@@ -3,7 +3,7 @@ import { PlotsCreateComponent } from './plots-create.component';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
     imports: [
         IonicModule,
         CommonModule,
-        FormsModule,
+        ReactiveFormsModule,
         // IonicPageModule.forChild(PlotsCreateComponent),
         // RouterModule.forChild([{ path: '', component: PlotsCreateComponent }])
     ],

@@ -32,22 +32,35 @@ export class MapPage implements OnInit {
 
   ngOnInit() {
 
-    this.plotId = this.navParamService.plotId;
-    console.log(this.plotId);
-
     this.coordinates = this.geoCoordService.getCurrentCoordinates();
 
+    this.plotId = this.navParamService.plotId;
+
     if (this.plotId) {
+
+      console.log('<<< Received Plot Id >>> ' + this.plotId);
+
       const plot = this.plotService.getPlot(this.plotId);
-      console.log(plot.plotName);
+
+      if (plot) {
+      console.log('<<< Plot Details received from database >>>');
+      console.log(plot.id + ' - ' + plot.plotName);
 
       this.lnglat = new mapboxgl.LngLat(plot.plotLongitude, plot.plotLatitude);
 
     } else {
 
+      console.log('<<< Coordinates from Geelocation >>> ' + this.coordinates.latitude.toPrecision(4));
+      console.log('<<< Coordinates from Geelocation >>> ' + this.coordinates.longitude.toPrecision(4));
+
+      this.lnglat = new mapboxgl.LngLat(this.coordinates.longitude, this.coordinates.latitude);
+
+    }
+  } else  {
+
     // this.coordinates = this.geoCoordService.getCurrentCoordinates();
-    console.log('Coordinates from Geotag >>> ' + this.coordinates.latitude.toPrecision(4));
-    console.log('Coordinates from Geotag >>> ' + this.coordinates.longitude.toPrecision(4));
+    console.log('<<< Coordinates from Geelocation >>> ' + this.coordinates.latitude.toPrecision(4));
+    console.log('<<< Coordinates from Geelocation >>> ' + this.coordinates.longitude.toPrecision(4));
 
     // this.lat = parseInt(this.coordinates.latitude.toPrecision(4), 10);
     // this.lng = parseInt(this.coordinates.longitude.toPrecision(4), 10);
