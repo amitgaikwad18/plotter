@@ -5,9 +5,6 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var path = require("path");
 
-var http = require("http");
-const debug = require("debug")("node-angular");
-
 const mongoose = require("mongoose");
 
 const Plot = require("./backend/model/plot");
@@ -86,32 +83,6 @@ app.put('/api/plots/:id', (req, res, next) => {
       console.log(error)
     });
 });
-
-const onError = error => {
-  if (error.syscall !== "listen") {
-    throw error;
-  }
-  const bind = typeof port === "string" ? "pipe " + port : "port " + port;
-  switch (error.code) {
-    case "EACCES":
-      console.error(bind + " requires elevated privileges");
-      process.exit(1);
-      break;
-    case "EADDRINUSE":
-      console.error(bind + " is already in use");
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-};
-
-const onListening = () => {
-  const addr = server.address();
-  const bind = typeof port === "string" ? "pipe " + port : "port " + port;
-  debug("Listening on " + bind);
-};
-
  
 app.use(express.static(path.resolve(__dirname, "www")));
 // app.set('port', process.env.PORT || 5000);
