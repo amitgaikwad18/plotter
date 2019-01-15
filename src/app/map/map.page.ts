@@ -37,7 +37,7 @@ export class MapPage implements OnInit {
 
     this.coordinates = this.geoCoordService.getCurrentCoordinates();
 
-    if (null !== this.plotId) {
+    if (this.plotId) {
       const plot = this.plotService.getPlot(this.plotId);
       console.log(plot.plotName);
 
