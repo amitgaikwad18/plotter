@@ -69,8 +69,12 @@ export class PlotsListComponent implements OnInit, OnDestroy {
   onTagPlot(plotId: string) {
 
     this.plot = this.plotsService.getPlot(plotId);
+
     const currentCoords = this.geoService.getCurrentCoordinates();
+
     this.plotsService.geoTagPlot(plotId, currentCoords.latitude, currentCoords.longitude);
+
+    this.showPlotTagAlert(currentCoords.latitude.toPrecision(4), currentCoords.longitude.toPrecision(4));
 
 
   }
@@ -79,6 +83,16 @@ export class PlotsListComponent implements OnInit, OnDestroy {
     const alert = await this.alertCtrl.create({
       header: 'Warning!',
       message: 'Missing Coordinates. Please click on Tag button.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async showPlotTagAlert(plotLatitude: any, plotLongitude: any) {
+    const alert = await this.alertCtrl.create({
+      header: 'Plot Tagged',
+      message: 'Your plot has been tagged at Latitude: ' + plotLatitude + ', Longitude: ' + plotLongitude,
       buttons: ['OK']
     });
 
