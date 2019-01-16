@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 import * as mapboxgl from 'mapbox-gl';
 
@@ -75,9 +75,9 @@ export class MapPage implements OnInit {
       zoom: 15,
     });
 
-    const marker = new mapboxgl.Marker()
-    .setLngLat(this.lnglat)
-    .addTo(this.map);
+    // const marker = new mapboxgl.Marker()
+    // .setLngLat(this.lnglat)
+    // .addTo(this.map);
 
     this.map.addControl(new mapboxgl.NavigationControl());
 
@@ -93,4 +93,39 @@ export class MapPage implements OnInit {
     });
 
   }
+
+  toggleSat() {
+    this.map.setStyle('mapbox://styles/mapbox/satellite-streets-v9');
+  }
+
+  toggleStreets() {
+    this.map.setStyle('mapbox://styles/mapbox/streets-v9');
+  }
+
+  onPinDrop() {
+
+    const currentCoords = this.geoCoordService.getCurrentCoordinates();
+
+    const pinMarker = new mapboxgl.Marker()
+    .setLngLat([currentCoords.longitude, currentCoords.latitude])
+    .addTo(this.map);
+
+  }
+
+  onStopPlotting() {
+
+    let img = this.map.getCanvas().toDataURL();
+
+  }
+
+  // async showAlert(img: any) {
+  //   const alert = await this.alertCtrl.create({
+  //     header: 'Plot Tagged',
+  //     message: '',
+  //     buttons: ['OK']
+  //   });
+
+  //   await alert.present();
+  // }
+
 }

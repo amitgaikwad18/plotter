@@ -11,4 +11,22 @@
 
 <ion-content>
   <div id='map'></div>
+  <ion-fab vertical="center" horizontal="start" edge slot="fixed">
+    <ion-fab-button color="light">
+      <ion-icon src="../../assets/magic-wand.svg"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="end">
+      <ion-fab-button (click)="toggleSat()"><ion-icon src="../../assets/sat-map.svg"></ion-icon></ion-fab-button>
+      <ion-fab-button (click)="toggleStreets()"><ion-icon src="../../assets/base-map.svg"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+      <ion-fab-button color="light">
+        <ion-icon src="../../assets/area-with-pins.svg"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="top">
+        <ion-fab-button (click)="onPinDrop()"><ion-icon src="../../assets/tick.svg"></ion-icon></ion-fab-button>
+        <ion-fab-button><ion-icon src="../../assets/delete.svg"></ion-icon></ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
 </ion-content>

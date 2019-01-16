@@ -18,7 +18,7 @@
       <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.plotName">
           <div class="error-message" 
-          *ngIf="plotForm.get('plotName').hasError(validation.type) && (plotForm.get('plotName').dirty || plotForm.get('plotName').touched)"> 
+          *ngIf="plotForm.get('plotName').hasError(validation.type) && (plotForm.get('plotName').dirty)"> 
             {{ validation.message }}
           </div>
         </ng-container>
