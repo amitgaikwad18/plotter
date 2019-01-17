@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
       console.log('Error getting position ', error);
     });
 
-    let watch = this.geoLocation.watchPosition()
+    this.geoLocation.watchPosition()
     .subscribe((resp) => {
       console.log('This is Watch');
       this.geoCoordService.setCurrentCoordinates(resp.coords.latitude, resp.coords.longitude);
