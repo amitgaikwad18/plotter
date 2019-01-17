@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm, FormControl, FormGroup, Validators, RequiredValidator } from '@angular/forms';
 import { PlotService } from '../../../services/plot.service';
 import { PlotValidator } from './plots.validator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-plots-create',
@@ -10,7 +11,7 @@ import { PlotValidator } from './plots.validator';
 })
 export class PlotsCreateComponent implements OnInit {
 
-  constructor(public plotService: PlotService) { }
+  constructor(public plotService: PlotService, private routeCtrl: Router) { }
 
   validation_messages = {
     'plotName': [
@@ -35,8 +36,12 @@ export class PlotsCreateComponent implements OnInit {
     // console.log(this.plotForm.get('plotName').value);
     this.plotService.addPlot(this.plotForm.get('plotName').value);
     // form.resetForm();
-
     this.plotForm.reset();
+    this.routeCtrl.navigate(['home']);
+  }
+
+  goToHome() {
+    this.routeCtrl.navigate(['home']);
   }
 
 }

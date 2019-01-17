@@ -29,12 +29,15 @@ export class PlotsListComponent implements OnInit, OnDestroy {
     public alertCtrl: AlertController) { }
 
   ngOnInit() {
+    this.initializePlots();
+  }
+
+  initializePlots() {
     this.plotsService.getPlots();
     this.plotsSub = this.plotsService.getPlotsAddListener()
     .subscribe((plots: Plot[]) => {
       this.plots = plots;
     });
-
   }
 
   deletePlot(plotId: string) {
@@ -99,17 +102,29 @@ export class PlotsListComponent implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  getItems(searchInput: any) {
+  getPlots(searchInput: any) {
 
-    const val = searchInput.target.value;
+    // Reinitializing all plots
+    // this.plotsService.getPlots();
 
-    if (val && val.trim() !== '')  {
+    let searchVal = searchInput.target.value;
 
-     this.plots = this.plots.filter(plot => plot.plotName.startsWith(val));
-
-     return this.plots;
-
+    if (!searchVal) {
+      return;
     }
 
+  //  if (searchVal && searchVal.trim() !== '')  {
+
+     this.plots = this.plots.filter((plot) => {
+
+      if ( plot.plotName && searchVal) {
+
+        if (plot.plotName.toLowerCase().indexOf(searchVal.toLowerCase()) > -1) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    });
   }
 }

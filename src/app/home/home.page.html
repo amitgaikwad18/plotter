@@ -6,10 +6,14 @@
     <ion-title color="white">
       Home
     </ion-title>
+    <ion-buttons slot="end">
+        <ion-button (click)="addPlot()" fill="solid" color="primary"><ion-icon name="add"></ion-icon>ADD</ion-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <app-plots-create></app-plots-create>
+  <!-- <ion-button size="full" (click)="addPlot()">ADD PLOT</ion-button> -->
+  <!-- <app-plots-create></app-plots-create> -->
   <app-plots-list></app-plots-list>
 </ion-content>

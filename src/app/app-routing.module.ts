@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { PlotsCreateComponent } from './plots/plots-create/plots-create.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'map',
     loadChildren: './map/map.module#MapPageModule'
+  },
+  {
+    path: 'create',
+    component: PlotsCreateComponent
   }
 ];
 

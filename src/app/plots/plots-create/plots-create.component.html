@@ -1,31 +1,45 @@
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Register Plot</ion-card-title>
-  </ion-card-header>
-  <form [formGroup]="plotForm" (ngSubmit)="onAddPlot()">
-    <ion-card-content>
-      <ion-item>
-        <ion-label position="floating">Plot Name</ion-label>
-        <ion-input 
-          type="text" 
-          formControlName="plotName" 
-          name="plotName" 
-          required 
-          clear-input>
-          Plot Name
-        </ion-input>
-      </ion-item>
-      <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.plotName">
-          <div class="error-message" 
-          *ngIf="plotForm.get('plotName').hasError(validation.type) && (plotForm.get('plotName').dirty)"> 
-            {{ validation.message }}
-          </div>
-        </ng-container>
-      </div>
-        <!-- <ion-button type="submit">Register</ion-button> -->
-        <ion-button color="primary" type="submit" float-right><ion-icon name="add"></ion-icon>Register</ion-button>
-    </ion-card-content>
-  </form>
-</ion-card>
+<ion-header color="primary">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title color="white">
+        New Plot
+      </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+          <ion-card-title>Register Plot</ion-card-title>
+        </ion-card-header>
+        <form [formGroup]="plotForm" (ngSubmit)="onAddPlot()">
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="floating">Plot Name</ion-label>
+              <ion-input 
+                type="text" 
+                formControlName="plotName" 
+                name="plotName" 
+                required 
+                clear-input>
+                Plot Name
+              </ion-input>
+            </ion-item>
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of validation_messages.plotName">
+                <div class="error-message" 
+                *ngIf="plotForm.get('plotName').hasError(validation.type) && (plotForm.get('plotName').dirty || plotForm.get('plotName').touched)"> 
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+              <!-- <ion-button type="submit">Register</ion-button> -->
+              <ion-button color="primary" type="submit" float-right><ion-icon name="add"></ion-icon>Register</ion-button>
+          </ion-card-content>
+        </form>
+      </ion-card>
+</ion-content>
+
 
