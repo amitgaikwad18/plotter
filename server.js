@@ -21,28 +21,28 @@ app.use(function(req, res, next) {
   next();
 });
 
-mongoose.connect('mongodb+srv://meanuser:7v2XbhqPsWewtf9c@cluster0-wkekd.mongodb.net/geotag?retryWrites=true')
+mongoose.connect("mongodb+srv://meanuser:7v2XbhqPsWewtf9c@cluster0-wkekd.mongodb.net/geotag?retryWrites=true")
 .then(() => {
-  console.log('Connected to MongoDB');
+  console.log("Connected to MongoDB");
 })
 .catch(() => {
-  console.log('Connection Failed to MongoDB');
+  console.log("Connection Failed to MongoDB");
 });
 
-app.post('/api/plots', (req, res, next) => {
+app.post("/api/plots", (req, res, next) => {
   const plot = new Plot({
     plotName: req.body.plotName
   });
   plot.save()
   .then(newPlot => {
     res.status(201).json({
-      message: 'Plot Added Successfully',
+      message: "Plot Added Successfully",
       plotId: newPlot._id,
     });
   });
 });
 
-app.get('/api/plots', (req, res, next) => {
+app.get("/api/plots", (req, res, next) => {
 
   Plot.find()
   .then(plots => {
@@ -54,7 +54,7 @@ app.get('/api/plots', (req, res, next) => {
   });
 });
 
-app.delete('/api/plots/:id', (req, res, next) => {
+app.delete("/api/plots/:id", (req, res, next) => {
   Plot.deleteOne({ _id: req.params.id })
   .then(result => {
     console.log(result);
@@ -64,7 +64,7 @@ app.delete('/api/plots/:id', (req, res, next) => {
   });
 });
 
-app.put('/api/plots/:id', (req, res, next) => {
+app.put("/api/plots/:id", (req, res, next) => {
 
   Plot.replaceOne({ _id: req.params.id}, 
     {

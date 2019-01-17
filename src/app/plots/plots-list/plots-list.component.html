@@ -18,6 +18,7 @@
       </ion-item-option>
     </ion-item-options>
   </ion-item-sliding> -->
+  <ion-searchbar (ionInput)="getItems($event)" showCancelButton placeholder="Find Plots"></ion-searchbar>
   <ion-card *ngFor="let plot of plots">
     <ion-card-header>
       <ion-card-title>
