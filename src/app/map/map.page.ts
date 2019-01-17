@@ -23,7 +23,6 @@ export class MapPage implements OnInit {
   coordinates: Geocoordinates;
   plotId: string;
   lnglat: any;
-  currentLocation: any;
 
   constructor(public geoCoordService: GeoCoordinatesService,
     private router: Router, public navParamService: NavParamService,
@@ -82,14 +81,13 @@ export class MapPage implements OnInit {
 
     this.map.addControl(new mapboxgl.NavigationControl());
 
-    this.currentLocation = this.map.addControl(new mapboxgl.GeolocateControl({
+    this.map.addControl(new mapboxgl.GeolocateControl({
       positionOptions: {
           enableHighAccuracy: true
       },
       trackUserLocation: true
     }));
 
-    console.log(this.currentLocation);
 
     this.map.on('load', () => {
       this.map.resize();
