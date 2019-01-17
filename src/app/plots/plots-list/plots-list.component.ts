@@ -99,16 +99,17 @@ export class PlotsListComponent implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  getItems(ev: any) {
+  getItems(searchInput: any) {
 
-    const val = ev.target.value;
+    const val = searchInput.target.value;
 
     if (val && val.trim() !== '')  {
 
      this.plots = this.plots.filter(plot => plot.plotName.startsWith(val));
 
-    }
+     return this.plots;
 
+    }
 
   }
 }
