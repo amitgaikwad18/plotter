@@ -1,4 +1,4 @@
-<ion-header color="primary">
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -9,16 +9,16 @@
 </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-buttons slot="center">
-    <ion-button fill="outline" (click)="onTagPlot(plot.id)">
-      <ion-icon name="map"></ion-icon>
+  <ion-buttons class="action-buttons">
+    <ion-button fill="solid" (click)="onTagPlot(plot.id)">
+      <ion-icon name="pin"></ion-icon>
       Tag
     </ion-button>
-    <ion-button fill="outline" color="success" (click)="onAddPlot(plot.id)">
+    <ion-button fill="solid" color="success" (click)="onAddPlot(plot.id)">
       <ion-icon name="add"></ion-icon>
       Add
     </ion-button>
-    <ion-button fill="outline" color="danger" (click)="deletePlot(plot.id)">
+    <ion-button fill="solid" color="danger" (click)="deletePlot(plot.id)">
       <ion-icon name="trash"></ion-icon>
       Delete
     </ion-button>
