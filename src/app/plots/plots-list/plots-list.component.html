@@ -1,6 +1,6 @@
 <ion-list *ngIf="plots.length > 0">
-  <ion-searchbar [(ngModel)]="searchInput" (ionInput)="getItems($event)" showCancelButton placeholder="Find Plots"></ion-searchbar>
-  <ion-card *ngFor="let plot of plots">
+  <!-- <ion-searchbar [(ngModel)]="searchInput" (ionInput)="getItems($event)" showCancelButton placeholder="Find Plots"></ion-searchbar> -->
+  <ion-card *ngFor="let plot of plots" (click)="onViewInfo(plot.id)">
       <ion-toolbar>
         <ion-buttons slot="end">
           <ion-button fill="solid" shape="round"><ion-icon name="information-circle" (click)="onViewInfo(plot.id)"></ion-icon></ion-button>
