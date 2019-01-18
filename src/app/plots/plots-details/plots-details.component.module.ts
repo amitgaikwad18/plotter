@@ -8,7 +8,7 @@ import { PlotPopOverPage } from './plot-popover.component';
 
 
 @NgModule({
-    declarations: [ PlotsDetailsComponent ],
+    declarations: [ PlotsDetailsComponent, PlotPopOverPage ],
     imports: [
         IonicModule,
         CommonModule,
