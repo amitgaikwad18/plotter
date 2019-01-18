@@ -30,6 +30,7 @@ export class PlotsDetailsComponent implements OnInit {
   }
 
   async presentPopover(ev: any) {
+    console.log('this is clicked');
     const popover = await this.popoverCtrl.create({
       component: MoreMenuPopover,
       event: ev,
