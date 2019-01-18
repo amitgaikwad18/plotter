@@ -8,3 +8,19 @@
     </ion-title>
 </ion-toolbar>
 </ion-header>
+<ion-content>
+  <ion-button>
+    <ion-button fill="outline" (click)="onTagPlot(plot.id)">
+      <ion-icon name="map"></ion-icon>
+      Tag
+    </ion-button>
+    <ion-button fill="outline" color="success" (click)="onAddPlot(plot.id)">
+      <ion-icon name="add"></ion-icon>
+      Add
+    </ion-button>
+    <ion-button fill="outline" color="danger" (click)="deletePlot(plot.id)">
+      <ion-icon name="trash"></ion-icon>
+      Delete
+    </ion-button>
+  </ion-button>
+</ion-content>
