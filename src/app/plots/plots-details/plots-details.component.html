@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="green">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -20,8 +20,10 @@
 </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-button fill="solid" color="danger" (click)="deletePlot(plot.id)">
+    <!-- <ion-button fill="solid" color="danger" (click)="deletePlot(plot.id)">
       <ion-icon name="trash"></ion-icon>
       Delete
-    </ion-button>
+    </ion-button> -->
+
+    <ion-popover-controller></ion-popover-controller>
 </ion-content>

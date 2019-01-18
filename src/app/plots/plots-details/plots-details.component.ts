@@ -4,8 +4,7 @@ import { NavParamService } from '../../../services/navparam.service';
 import { PlotService } from '../../../services/plot.service';
 
 import { PopoverController } from '@ionic/angular';
-import { MoreMenuPopover } from './plot-details.popover.component';
-
+import { PlotPopOverPage } from './plot-popover.component';
 
 @Component({
   selector: 'app-plots-details',
@@ -30,9 +29,8 @@ export class PlotsDetailsComponent implements OnInit {
   }
 
   async presentPopover(ev: any) {
-    console.log('this is clicked');
     const popover = await this.popoverCtrl.create({
-      component: MoreMenuPopover,
+      component: PlotPopOverPage,
       event: ev,
       translucent: true
     });
