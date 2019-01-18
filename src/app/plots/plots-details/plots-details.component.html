@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="green">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -13,7 +13,7 @@
           <ion-button (click)="onAddPlot(plot.id)">
             <ion-icon slot="icon-only" name="add"></ion-icon>
           </ion-button>
-          <ion-button menuToggle>
+          <ion-button ion-only (click)="presentPopover($event)">
               <ion-icon slot="icon-only" name="more"></ion-icon>
           </ion-button>
     </ion-buttons>
