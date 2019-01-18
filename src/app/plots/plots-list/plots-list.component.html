@@ -1,11 +1,16 @@
 <ion-list *ngIf="plots.length > 0">
   <ion-searchbar [(ngModel)]="searchInput" (ionInput)="getItems($event)" showCancelButton placeholder="Find Plots"></ion-searchbar>
   <ion-card *ngFor="let plot of plots">
-    <ion-card-header>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button>Details</ion-button>
+        </ion-buttons>
+      <ion-card-header>
       <ion-card-title>
         {{ plot.plotName }}
-      </ion-card-title>
+      </ion-card-title> 
     </ion-card-header>
+  </ion-toolbar>
     <ion-card-content class="card-buttons">
       <ion-button size="small" fill="outline" (click)="onTagPlot(plot.id)">
         <ion-icon name="map"></ion-icon>

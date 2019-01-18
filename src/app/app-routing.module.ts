@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PlotsCreateComponent } from './plots/plots-create/plots-create.component';
+import { PlotsDetailsComponent } from './plots/plots-details/plots-details.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'create',
     component: PlotsCreateComponent
+  },
+  {
+    path: 'plotdetails',
+    component: PlotsDetailsComponent
   }
 ];
 

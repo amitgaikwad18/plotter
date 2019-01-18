@@ -11,9 +11,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     imports: [
         IonicModule,
         CommonModule,
+        FormsModule,
         ReactiveFormsModule,
     ],
     exports: [ PlotsDetailsComponent ],
 })
 
-export class PlotsCreateModule {}
+export class PlotsDetailsModule {}
