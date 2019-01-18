@@ -3,7 +3,7 @@
   <ion-card *ngFor="let plot of plots">
       <ion-toolbar>
         <ion-buttons slot="end">
-          <ion-button>Details</ion-button>
+          <ion-button fill="solid" shape="round"><ion-icon name="information-circle" (click)="onViewInfo(plot.id)"></ion-icon></ion-button>
         </ion-buttons>
       <ion-card-header>
       <ion-card-title>

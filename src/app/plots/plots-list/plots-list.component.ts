@@ -82,6 +82,14 @@ export class PlotsListComponent implements OnInit, OnDestroy {
 
   }
 
+  onViewInfo(plotId: string) {
+
+
+  this.navParamService.plotId = plotId;
+  this.routeCtrl.navigate(['plotdetails']);
+
+  }
+
   async showAlert() {
     const alert = await this.alertCtrl.create({
       header: 'Warning!',
@@ -107,7 +115,7 @@ export class PlotsListComponent implements OnInit, OnDestroy {
     // Reinitializing all plots
     // this.plotsService.getPlots();
 
-    let searchVal = searchInput.target.value;
+    const searchVal = searchInput.target.value;
 
     if (!searchVal) {
       return;
