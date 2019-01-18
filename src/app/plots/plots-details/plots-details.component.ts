@@ -4,6 +4,8 @@ import { NavParamService } from '../../../services/navparam.service';
 import { PlotService } from '../../../services/plot.service';
 
 import { PopoverController } from '@ionic/angular';
+import { MoreMenuPopover } from './plot-details.popover.component';
+
 
 @Component({
   selector: 'app-plots-details',
@@ -15,7 +17,7 @@ export class PlotsDetailsComponent implements OnInit {
   plotId: any;
   plot: Plot;
 
-  constructor(public navParamService: NavParamService, private plotService: PlotService, public popoverController: PopoverController) { }
+  constructor(public navParamService: NavParamService, private plotService: PlotService, public popoverCtrl: PopoverController) { }
 
   ngOnInit() {
 
@@ -27,11 +29,13 @@ export class PlotsDetailsComponent implements OnInit {
     this.plot = this.plotService.getPlot(this.plotId);
   }
 
-  presentPopover(event) {
-
-    alert('Yay! Popover!');
-
+  async presentPopover(ev: any) {
+    const popover = await this.popoverCtrl.create({
+      component: MoreMenuPopover,
+      event: ev,
+      translucent: true
+    });
+    return await popover.present();
   }
-
 
 }
