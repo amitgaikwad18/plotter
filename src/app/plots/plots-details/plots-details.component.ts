@@ -3,6 +3,8 @@ import { Plot } from '../../../models/plot.model';
 import { NavParamService } from '../../../services/navparam.service';
 import { PlotService } from '../../../services/plot.service';
 
+import { PopoverController } from '@ionic/angular';
+
 @Component({
   selector: 'app-plots-details',
   templateUrl: './plots-details.component.html',
@@ -13,7 +15,7 @@ export class PlotsDetailsComponent implements OnInit {
   plotId: any;
   plot: Plot;
 
-  constructor(public navParamService: NavParamService, private plotService: PlotService) { }
+  constructor(public navParamService: NavParamService, private plotService: PlotService, public popoverController: PopoverController) { }
 
   ngOnInit() {
 
@@ -23,6 +25,12 @@ export class PlotsDetailsComponent implements OnInit {
     console.log('<<< Details Requested for >>>> '  + this.plotId);
 
     this.plot = this.plotService.getPlot(this.plotId);
+  }
+
+  presentPopover(event) {
+
+    alert('Yay! Popover!');
+
   }
 
 
