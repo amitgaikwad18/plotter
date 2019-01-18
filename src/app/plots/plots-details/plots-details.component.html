@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title color="white">
+    <ion-title color="light">
       {{ plot.plotName }}
     </ion-title>
     <ion-buttons slot="end">
@@ -15,12 +15,15 @@
           </ion-button>
           <ion-button menuToggle>
               <ion-icon slot="icon-only" name="more"></ion-icon>
-            </ion-button>
+              <ion-button fill="solid" color="danger" (click)="deletePlot(plot.id)">
+                  <ion-icon name="trash"></ion-icon>
+                  Delete
+              </ion-button>
+          </ion-button>
     </ion-buttons>
 </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-buttons class="action-buttons">
     <ion-button fill="solid" color="danger" (click)="deletePlot(plot.id)">
       <ion-icon name="trash"></ion-icon>
       Delete
