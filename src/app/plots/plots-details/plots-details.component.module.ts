@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PlotPopOverPage } from './plot-popover.component';
 
 
 @NgModule({
@@ -14,7 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         FormsModule,
         ReactiveFormsModule,
     ],
-    exports: [ PlotsDetailsComponent ],
+    exports: [ PlotsDetailsComponent, PlotPopOverPage ],
 })
 
 export class PlotsDetailsModule {}
