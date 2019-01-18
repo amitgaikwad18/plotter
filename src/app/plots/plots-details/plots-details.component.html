@@ -1,23 +1,26 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title color="white">
       {{ plot.plotName }}
     </ion-title>
+    <ion-buttons slot="end">
+        <ion-button (click)="onTagPlot(plot.id)">
+            <ion-icon slot="icon-only" name="pin"></ion-icon>
+          </ion-button>
+          <ion-button (click)="onAddPlot(plot.id)">
+            <ion-icon slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+          <ion-button menuToggle>
+              <ion-icon slot="icon-only" name="more"></ion-icon>
+            </ion-button>
+    </ion-buttons>
 </ion-toolbar>
 </ion-header>
 <ion-content>
   <ion-buttons class="action-buttons">
-    <ion-button fill="solid" (click)="onTagPlot(plot.id)">
-      <ion-icon name="pin"></ion-icon>
-      Tag
-    </ion-button>
-    <ion-button fill="solid" color="success" (click)="onAddPlot(plot.id)">
-      <ion-icon name="add"></ion-icon>
-      Add
-    </ion-button>
     <ion-button fill="solid" color="danger" (click)="deletePlot(plot.id)">
       <ion-icon name="trash"></ion-icon>
       Delete
