@@ -17,11 +17,13 @@ export class PlotsDetailsComponent implements OnInit {
 
   ngOnInit() {
 
+    console.log('<<< This is details >>>');
     this.plotId = this.navParamService.plotId;
 
+    console.log('<<< Details Requested for >>>> '  + this.plotId);
+
     this.plot = this.plotService.getPlot(this.plotId);
-
-
   }
+
 
 }

@@ -84,9 +84,9 @@ export class PlotsListComponent implements OnInit, OnDestroy {
 
   onViewInfo(plotId: string) {
 
-
+    console.log('Plot Details requested >>> ' + plotId);
   this.navParamService.plotId = plotId;
-  this.routeCtrl.navigate(['plotdetails']);
+  this.routeCtrl.navigate(['/plotdetails']);
 
   }
 
