@@ -1,7 +1,5 @@
-<!-- <ion-searchbar (ionInput)="getPlots($event)" 
-  showCancelButton="true" 
-  placeholder="Find Plots"></ion-searchbar> -->
 <ion-list *ngIf="plots.length > 0">
+  <ion-searchbar [(ngModel)]="searchInput" (ionInput)="getItems($event)" showCancelButton placeholder="Find Plots"></ion-searchbar>
   <ion-card *ngFor="let plot of plots">
     <ion-card-header>
       <ion-card-title>

@@ -7,9 +7,11 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+
 import { PlotsCreateModule } from './plots/plots-create/plots-create.component.module';
 import { PlotsListModule } from './plots/plots-list/plots-list.component.module';
-import { HttpClientModule } from '@angular/common/http';
+import { PlotsDetailsModule } from './plots/plots-details/plots-details.component.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     PlotsCreateModule,
     PlotsListModule,
     HttpClientModule,
+    PlotsDetailsModule,
   ],
   providers: [
     StatusBar,
