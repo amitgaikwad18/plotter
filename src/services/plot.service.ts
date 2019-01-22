@@ -5,12 +5,16 @@ import { Injectable } from '@angular/core';
 
 import { Plot } from '../models/plot.model';
 import { environment } from 'src/environments/environment.prod';
+import { ChildPlot } from 'src/models/childplot.model';
 
 @Injectable({providedIn: 'root'})
 export class PlotService {
 
     private plots: Plot[] = [];
     private plotsAdded = new Subject<Plot[]>();
+
+    private childPlots: ChildPlot[] = [];
+    private childPlotAdded = new Subject<ChildPlot[]>();
 
     constructor(private httpClient: HttpClient) {}
 
@@ -65,12 +69,6 @@ export class PlotService {
     }
 
     geoTagPlot(plotId: string, plotLat: number, plotLong: number) {
-        // const updatedPlot: Plot = {
-        //     id: plot.id,
-        //     plotName: plot.plotName,
-        //     plotLatitude: plotLat,
-        //     plotLongitude: plotLong
-        // };
         const updatedPlot = this.plots.find(plot => plot.id === plotId);
         updatedPlot.plotLatitude = plotLat;
         updatedPlot.plotLongitude = plotLong;
@@ -82,4 +80,49 @@ export class PlotService {
         });
     }
 
+    getChildPlots(parentPlotId: string) {
+
+        this.httpClient
+        .get<{message: string, plots: any}>(environment.app_url + '/api/childplots' + parentPlotId)
+        .pipe(map((childPlotData) => {
+            return childPlotData.plots.map((childPlot) => {
+
+                return {
+                    id: childPlot._id,
+                    parentPlotId: childPlot.parentPlotId,
+                    plotLatitude: childPlot.plotLatitude,
+                    plotLongitude: childPlot.plotLongitude,
+
+                };
+            });
+        }))
+        .subscribe((changedChildPlots) => {
+            this.childPlots = changedChildPlots;
+            return this.childPlotAdded.next([...this.childPlots]);
+        });
+    }
+
+    addChildPlot(parentPlotId: string, plotLatitude: number, plotLongitude: number) {
+
+        console.log('<<< addChildPlot >>> ');
+        console.log(parentPlotId);
+        console.log(plotLatitude);
+        console.log(plotLongitude);
+
+        const newChildPlot: ChildPlot = {
+            id: null,
+            parentPlotId: parentPlotId,
+            plotLatitude: plotLatitude,
+            plotLongitude: plotLongitude,
+        };
+        this.httpClient
+        .post<{message: string, childPlotId: string}>(environment.app_url + '/api/childplot', newChildPlot)
+        .subscribe((responseData) => {
+            newChildPlot.id = responseData.childPlotId;
+            console.log('New Child ID >>> ' + newChildPlot.id);
+            this.childPlots.push(newChildPlot);
+            this.childPlotAdded.next([...this.childPlots]);
+        });
+
+    }
 }

@@ -33,9 +33,7 @@ export class PlotsCreateComponent implements OnInit {
 
   onAddPlot() {
 
-    // console.log(this.plotForm.get('plotName').value);
     this.plotService.addPlot(this.plotForm.get('plotName').value);
-    // form.resetForm();
     this.plotForm.reset();
     this.routeCtrl.navigate(['home']);
   }

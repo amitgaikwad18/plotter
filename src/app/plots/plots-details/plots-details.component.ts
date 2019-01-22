@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Plot } from '../../../models/plot.model';
 import { NavParamService } from '../../../services/navparam.service';
 import { PlotService } from '../../../services/plot.service';
-
 import { PopoverController } from '@ionic/angular';
-import { PlotPopOverPage } from './plot-popover.component';
+import { ChildPlot } from 'src/models/childplot.model';
+import { GeoCoordinatesService } from 'src/services/geocoordinates.service';
 
 @Component({
   selector: 'app-plots-details',
@@ -16,7 +16,10 @@ export class PlotsDetailsComponent implements OnInit {
   plotId: any;
   plot: Plot;
 
-  constructor(public navParamService: NavParamService, private plotService: PlotService, public popoverCtrl: PopoverController) { }
+  childPlots: ChildPlot[] = [];
+
+  constructor(public navParamService: NavParamService, private plotService: PlotService,
+    public geoCoordinateService: GeoCoordinatesService) { }
 
   ngOnInit() {
 
@@ -26,15 +29,24 @@ export class PlotsDetailsComponent implements OnInit {
     console.log('<<< Details Requested for >>>> '  + this.plotId);
 
     this.plot = this.plotService.getPlot(this.plotId);
+
+    // this.plotService.getChildPlots(this.plotId);
   }
 
-  async presentPopover(ev: any) {
-    const popover = await this.popoverCtrl.create({
-      component: PlotPopOverPage,
-      event: ev,
-      translucent: true
-    });
-    return await popover.present();
+  onTagPlot(parentPlotId: string) {
+
+    console.log('Tagging Plot');
+
+    const coords = this.geoCoordinateService.getCurrentCoordinates();
+
+    console.log('<<< onTagPlot >>> ');
+    console.log(parentPlotId);
+    console.log(coords.latitude);
+    console.log(coords.longitude);
+
+    this.plotService.addChildPlot(parentPlotId, coords.latitude, coords.longitude);
   }
+
+
 
 }

@@ -8,6 +8,7 @@ var path = require("path");
 const mongoose = require("mongoose");
 
 const Plot = require("./backend/model/plot");
+const ChildPlot = require("./backend/model/childplot");
  
 app.use(morgan("dev"));                                        
 app.use(bodyParser.urlencoded({"extended":"true"}));            
@@ -82,6 +83,40 @@ app.put("/api/plots/:id", (req, res, next) => {
     .catch(error => {
       console.log(error)
     });
+});
+
+app.get("/api/childplot/:id", (req, res, next) => {
+  
+  ChildPlot.find({parentPlotId: req.param.id})
+  .then(childplots => {
+    console.log(childplots);
+    res.status(200).json({
+      message: "Plots Fetched Successfully!",
+      childplots: childplots
+    });
+  })
+});
+
+app.post("/api/childplot", (req, res, next) => {
+
+  console.log(" <<< API >>> ");
+  console.log(req.body.parentPlotId);
+  console.log(req.body.plotLatitude);
+  console.log(req.body.plotLongitude);
+
+  const childPlot = new ChildPlot({
+    parentPlotId: req.body.parentPlotId,
+    plotLatitude: req.body.plotLatitude,
+    plotLongitude: req.body.plotLongitude,
+  });
+  childPlot.save()
+  .then(newChildPlot => {
+    res.status(201).json({
+      message: "Plot Added Successfully",
+      plotId: newChildPlot._id,
+    });
+  })
+  .catch(error => console.log(error));
 });
  
 app.use(express.static(path.resolve(__dirname, "www")));
