@@ -83,12 +83,13 @@ export class PlotService {
     getChildPlots(parentPlotId: string) {
 
         this.httpClient
-        .get<{message: string, plots: any}>(environment.app_url + '/api/childplots' + parentPlotId)
-        .pipe(map((childPlotData) => {
-            return childPlotData.plots.map((childPlot) => {
+        .get<{message: string, childplots: any}>(environment.app_url + '/api/childplots/' + parentPlotId)
+        .pipe(map((responseData) => {
+            return responseData.childplots.map((childPlot) => {
 
                 return {
                     id: childPlot._id,
+                    plotName: childPlot.plotName,
                     parentPlotId: childPlot.parentPlotId,
                     plotLatitude: childPlot.plotLatitude,
                     plotLongitude: childPlot.plotLongitude,
@@ -102,18 +103,29 @@ export class PlotService {
         });
     }
 
-    addChildPlot(parentPlotId: string, plotLatitude: number, plotLongitude: number) {
+    getChildplotsListener() {
+        return this.childPlotAdded.asObservable();
+    }
+
+    getChildPlot(id: string) {
+        return {...this.childPlots.find(childPlot => childPlot.id === id)};
+    }
+
+    addChildPlot(plotName: string, parentPlotId: string, plotLatitude: number, plotLongitude: number) {
 
         console.log('<<< addChildPlot >>> ');
+        console.log(plotName);
         console.log(parentPlotId);
         console.log(plotLatitude);
         console.log(plotLongitude);
 
         const newChildPlot: ChildPlot = {
             id: null,
+            plotName: plotName,
             parentPlotId: parentPlotId,
             plotLatitude: plotLatitude,
             plotLongitude: plotLongitude,
+            // plotImg: plotImg,
         };
         this.httpClient
         .post<{message: string, childPlotId: string}>(environment.app_url + '/api/childplot', newChildPlot)
@@ -123,6 +135,16 @@ export class PlotService {
             this.childPlots.push(newChildPlot);
             this.childPlotAdded.next([...this.childPlots]);
         });
+    }
 
+    deleteChildPlot(plotId: string) {
+        this.httpClient
+        .delete(environment.app_url + '/api/childplots/' + plotId)
+        .subscribe(() => {
+            console.log('Plot Deleted');
+            const updatedPlots = this.childPlots.filter(childPlot => childPlot.id !== plotId);
+            this.childPlots = updatedPlots;
+            this.childPlotAdded.next([...this.childPlots]);
+        });
     }
 }

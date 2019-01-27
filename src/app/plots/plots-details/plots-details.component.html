@@ -7,12 +7,12 @@
       {{ plot.plotName }}
     </ion-title>
     <ion-buttons slot="end">
-        <ion-button (click)="onTagPlot(plot.id)">
+        <ion-button (click)="onTag()">
             <ion-icon slot="icon-only" name="pin"></ion-icon>
           </ion-button>
-          <ion-button (click)="onAddPlot(plot.id)">
+          <!-- <ion-button (click)="onAddPlot(plot.id)">
             <ion-icon slot="icon-only" name="add"></ion-icon>
-          </ion-button>
+          </ion-button> -->
           <ion-button ion-only>
               <ion-icon slot="icon-only" name="more"></ion-icon>
           </ion-button>
@@ -20,8 +20,24 @@
 </ion-toolbar>
 </ion-header>
 <ion-content>
-    <!-- <ion-button fill="solid" color="danger" (click)="deletePlot(plot.id)">
-      <ion-icon name="trash"></ion-icon>
-      Delete
-    </ion-button> -->
+  <ion-list>
+  <ion-card *ngFor="let childplot of childPlots">
+      <!-- <img class="image-content" src="../../../assets/icon/world.png"> -->
+    <ion-card-header>
+      <ion-card-title>
+        <ion-card-title> {{ childplot.plotName }} </ion-card-title>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-label>{{ childplot.plotLatitude.toPrecision(4) }} </ion-label>
+        <ion-label>{{ childplot.plotLongitude.toPrecision(4) }} </ion-label>
+    </ion-card-content>
+    <ion-buttons float-right>
+      <ion-button fill="outline" color="danger" (click)="deleteChildPlots(childplot.id)">Delete</ion-button>
+      <ion-button fill="outline" color="primary">View</ion-button>
+      <ion-button fill="outline" color="secondary" (click)="onPlot(childplot.id)">Plot</ion-button>
+    </ion-buttons>
+  </ion-card>
+</ion-list>
 </ion-content>
+<p class="info-text" *ngIf="childPlots.length <= 0"> No Child Plots Added Yet</p>

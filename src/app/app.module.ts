@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PlotsCreateModule } from './plots/plots-create/plots-create.component.module';
 import { PlotsListModule } from './plots/plots-list/plots-list.component.module';
 import { PlotsDetailsModule } from './plots/plots-details/plots-details.component.module';
+import { PlotsChildModule } from './plots/plots-child/plots-child.component.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { PlotsDetailsModule } from './plots/plots-details/plots-details.componen
     PlotsListModule,
     HttpClientModule,
     PlotsDetailsModule,
+    PlotsChildModule,
   ],
   providers: [
     StatusBar,

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 import { Geocoordinates } from '../models/geocoordinates.model';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @Injectable({providedIn: 'root'})
 export class GeoCoordinatesService {
@@ -11,8 +12,14 @@ export class GeoCoordinatesService {
 
     private coordsUpdated = new Subject<Geocoordinates[]>();
 
+    constructor(public geoLocation: Geolocation) {}
+
     getCurrentCoordinates() {
         return this.coordinates;
+    }
+
+    getChangedPosition() {
+        return this.coordsUpdated.asObservable();
     }
 
     setCurrentCoordinates(lat: any, lng: any) {

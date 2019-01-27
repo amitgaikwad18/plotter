@@ -1,10 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+
 import { Plot } from '../../../models/plot.model';
 import { NavParamService } from '../../../services/navparam.service';
 import { PlotService } from '../../../services/plot.service';
-import { PopoverController } from '@ionic/angular';
 import { ChildPlot } from 'src/models/childplot.model';
 import { GeoCoordinatesService } from 'src/services/geocoordinates.service';
+import { Subscription } from 'rxjs';
+
+import * as mapboxgl from 'mapbox-gl';
+import { environment } from 'src/environments/environment';
+import { PlotsCreateComponent } from '../plots-create/plots-create.component';
+import { PlotsChildComponent } from '../plots-child/plots-child.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-plots-details',
@@ -17,9 +25,21 @@ export class PlotsDetailsComponent implements OnInit {
   plot: Plot;
 
   childPlots: ChildPlot[] = [];
+  private childPlotsSub = new Subscription;
+
+  map: any;
+  mapImg: any;
+
+  imageURI: any;
+  imageFileName: any;
+
+  modal: any;
 
   constructor(public navParamService: NavParamService, private plotService: PlotService,
-    public geoCoordinateService: GeoCoordinatesService) { }
+    public geoCoordinateService: GeoCoordinatesService, public modalCtrl: ModalController,
+    public router: Router) {
+      mapboxgl.accessToken = environment.mapbox.accessToken;
+    }
 
   ngOnInit() {
 
@@ -30,23 +50,39 @@ export class PlotsDetailsComponent implements OnInit {
 
     this.plot = this.plotService.getPlot(this.plotId);
 
-    // this.plotService.getChildPlots(this.plotId);
+    this.initializeChildPlots(this.plot.id);
+
   }
 
-  onTagPlot(parentPlotId: string) {
+  initializeChildPlots(plotId: string) {
 
-    console.log('Tagging Plot');
+    console.log('Childs for ' + plotId);
 
-    const coords = this.geoCoordinateService.getCurrentCoordinates();
+    this.plotService.getChildPlots(plotId);
+    this.childPlotsSub = this.plotService.getChildplotsListener()
+    .subscribe((childPlots: ChildPlot[]) => {
+      this.childPlots = childPlots;
+    });
+    }
 
-    console.log('<<< onTagPlot >>> ');
-    console.log(parentPlotId);
-    console.log(coords.latitude);
-    console.log(coords.longitude);
+  onPlot(childId: string) {
 
-    this.plotService.addChildPlot(parentPlotId, coords.latitude, coords.longitude);
+    this.navParamService.childPlotId = childId;
+    this.router.navigate(['map']);
+
   }
 
+  async onTag() {
 
+    this.modal = await this.modalCtrl.create({
+      component: PlotsChildComponent,
+      componentProps: { plotId: this.plotId }
+    });
+    return await this.modal.present();
+  }
+
+  deleteChildPlots(childPlotId: string) {
+    this.plotService.deleteChildPlot(childPlotId);
+  }
 
 }

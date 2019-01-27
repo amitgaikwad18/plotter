@@ -5,6 +5,8 @@ var bodyParser = require("body-parser");
 var cors = require("cors");
 var path = require("path");
 
+var fs = require('fs');
+
 const mongoose = require("mongoose");
 
 const Plot = require("./backend/model/plot");
@@ -85,9 +87,11 @@ app.put("/api/plots/:id", (req, res, next) => {
     });
 });
 
-app.get("/api/childplot/:id", (req, res, next) => {
+app.get("/api/childplots/:id", (req, res, next) => {
+
+  console.log(req.params.id);
   
-  ChildPlot.find({parentPlotId: req.param.id})
+  ChildPlot.find({ parentPlotId: req.params.id})
   .then(childplots => {
     console.log(childplots);
     res.status(200).json({
@@ -100,15 +104,19 @@ app.get("/api/childplot/:id", (req, res, next) => {
 app.post("/api/childplot", (req, res, next) => {
 
   console.log(" <<< API >>> ");
+  console.log(req.body.plotName);
   console.log(req.body.parentPlotId);
   console.log(req.body.plotLatitude);
   console.log(req.body.plotLongitude);
 
   const childPlot = new ChildPlot({
+    plotName: req.body.plotName,
     parentPlotId: req.body.parentPlotId,
     plotLatitude: req.body.plotLatitude,
     plotLongitude: req.body.plotLongitude,
+    // plotImg: req.body.plotImg,
   });
+
   childPlot.save()
   .then(newChildPlot => {
     res.status(201).json({
@@ -118,6 +126,17 @@ app.post("/api/childplot", (req, res, next) => {
   })
   .catch(error => console.log(error));
 });
+
+app.delete("/api/childplots/:id", (req, res, next) => {
+  ChildPlot.deleteOne({ _id: req.params.id })
+  .then(result => {
+    console.log(result);
+    res.status(200).json({
+      message: "Plot Deleted Successfully!",
+    });
+  });
+});
+
  
 app.use(express.static(path.resolve(__dirname, "www")));
 // app.set('port', process.env.PORT || 5000);

@@ -8,6 +8,9 @@ import { Geocoordinates } from 'src/models/geocoordinates.model';
 import { Router } from '@angular/router';
 import { NavParamService } from 'src/services/navparam.service';
 import { PlotService } from 'src/services/plot.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import 'rxjs/add/observable/interval';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-map',
@@ -24,9 +27,13 @@ export class MapPage implements OnInit {
   plotId: string;
   lnglat: any;
 
+  childPlotId: string;
+  changingPosition = new Subscription();
+  coordinatesList: any = [];
+
   constructor(public geoCoordService: GeoCoordinatesService,
     private router: Router, public navParamService: NavParamService,
-    public plotService: PlotService) {
+    public plotService: PlotService, public geolocation: Geolocation) {
     mapboxgl.accessToken = environment.mapbox.accessToken;
   }
 
@@ -35,18 +42,19 @@ export class MapPage implements OnInit {
     this.coordinates = this.geoCoordService.getCurrentCoordinates();
 
     this.plotId = this.navParamService.plotId;
+    this.childPlotId = this.navParamService.childPlotId;
 
-    if (this.plotId) {
+    if (this.childPlotId) {
 
-      console.log('<<< Received Plot Id >>> ' + this.plotId);
+      console.log('<<< Received Plot Id >>> ' + this.childPlotId);
 
-      const plot = this.plotService.getPlot(this.plotId);
+      const childPlot = this.plotService.getChildPlot(this.childPlotId);
 
-      if (plot) {
+      if (childPlot) {
       console.log('<<< Plot Details received from database >>>');
-      console.log(plot.id + ' - ' + plot.plotName);
+      console.log(childPlot.id + ' - ' + childPlot.plotName);
 
-      this.lnglat = new mapboxgl.LngLat(plot.plotLongitude, plot.plotLatitude);
+      this.lnglat = new mapboxgl.LngLat(childPlot.plotLongitude, childPlot.plotLatitude);
 
     } else {
 
@@ -81,16 +89,19 @@ export class MapPage implements OnInit {
 
     this.map.addControl(new mapboxgl.NavigationControl());
 
-    this.map.addControl(new mapboxgl.GeolocateControl({
+    const geolocate = new mapboxgl.GeolocateControl({
       positionOptions: {
           enableHighAccuracy: true
       },
       trackUserLocation: true
-    }));
+    });
+
+    this.map.addControl(geolocate);
 
 
     this.map.on('load', () => {
       this.map.resize();
+
     });
 
   }
@@ -105,17 +116,49 @@ export class MapPage implements OnInit {
 
   onPinDrop() {
 
-    const currentCoords = this.geoCoordService.getCurrentCoordinates();
+    // const currentCoords = this.geoCoordService.getCurrentCoordinates();
 
-    const pinMarker = new mapboxgl.Marker()
-    .setLngLat([currentCoords.longitude, currentCoords.latitude])
-    .addTo(this.map);
+    this.changingPosition = Observable.interval(1000)
+    .subscribe(() => {
+      const coords = this.geoCoordService.getCurrentCoordinates();
+
+      console.log(coords.latitude + ' - ' + coords.longitude);
+
+      const updatedlngLat = new mapboxgl.LngLat(coords.longitude, coords.latitude);
+
+      this.coordinatesList.push(updatedlngLat);
+      // console.log('called');
+    });
+    // const pinMarker = new mapboxgl.Marker()
+    // .setLngLat([currentCoords.longitude, currentCoords.latitude])
+    // .addTo(this.map);
 
   }
 
   onStopPlotting() {
 
-    let img = this.map.getCanvas().toDataURL();
+    this.changingPosition.unsubscribe();
+    console.log(this.coordinatesList);
+
+    this.map.addLayer({
+      'id': 'plot',
+      'type': 'fill',
+      'source': {
+        'type': 'geojson',
+        'data': {
+          'type': 'Feature',
+          'geometry': {
+            'type': 'Polygon',
+            'coordinates': this.coordinatesList
+          }
+        }
+      },
+      'layout': {},
+      'paint': {
+        'fill-color': '#088',
+        'fill-opacity': 0.8
+        }
+    });
 
   }
 

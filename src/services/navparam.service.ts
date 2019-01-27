@@ -6,4 +6,5 @@ import { Injectable } from '@angular/core';
 export class NavParamService {
 
     public plotId: string;
+    public childPlotId: string;
 }
