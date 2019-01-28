@@ -72,13 +72,18 @@ export class PlotsDetailsComponent implements OnInit {
 
   }
 
-  async onTag() {
+  // async onTag() {
 
-    this.modal = await this.modalCtrl.create({
-      component: PlotsChildComponent,
-      componentProps: { plotId: this.plotId }
-    });
-    return await this.modal.present();
+  //   this.modal = await this.modalCtrl.create({
+  //     component: PlotsChildComponent,
+  //     componentProps: { plotId: this.plotId }
+  //   });
+  //   return await this.modal.present();
+  // }
+
+  onTag(plotId: string) {
+    this.navParamService.plotId = plotId;
+    this.router.navigate(['plotaddchild']);
   }
 
   deleteChildPlots(childPlotId: string) {

@@ -93,7 +93,8 @@ export class PlotService {
                     parentPlotId: childPlot.parentPlotId,
                     plotLatitude: childPlot.plotLatitude,
                     plotLongitude: childPlot.plotLongitude,
-
+                    plotPolygon: childPlot.plotPolygon,
+                    plotarea: childPlot.plotArea,
                 };
             });
         }))
@@ -125,7 +126,8 @@ export class PlotService {
             parentPlotId: parentPlotId,
             plotLatitude: plotLatitude,
             plotLongitude: plotLongitude,
-            // plotImg: plotImg,
+            plotArea: null,
+            plotPolygon: null,
         };
         this.httpClient
         .post<{message: string, childPlotId: string}>(environment.app_url + '/api/childplot', newChildPlot)
@@ -145,6 +147,18 @@ export class PlotService {
             const updatedPlots = this.childPlots.filter(childPlot => childPlot.id !== plotId);
             this.childPlots = updatedPlots;
             this.childPlotAdded.next([...this.childPlots]);
+        });
+    }
+
+    updateChildPlot(plotId: string, plotPolygon: string[], plotArea: number) {
+
+        const updatedChildPlot = this.childPlots.find(childPlot => childPlot.id === plotId);
+        updatedChildPlot.plotPolygon = plotPolygon;
+        updatedChildPlot.plotArea = plotArea;
+        this.httpClient
+        .put<{message: string, plotId: string}>(environment.app_url + '/api/childplots/' + plotId, updatedChildPlot)
+        .subscribe(() => {
+            console.log('Plot updated successfully');
         });
     }
 }

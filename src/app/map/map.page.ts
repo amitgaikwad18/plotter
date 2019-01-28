@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 import * as mapboxgl from 'mapbox-gl';
+import * as turf from '@turf/turf';
 
 import { GeoCoordinatesService } from 'src/services/geocoordinates.service';
 import { environment } from 'src/environments/environment';
@@ -30,6 +31,7 @@ export class MapPage implements OnInit {
   childPlotId: string;
   changingPosition = new Subscription();
   coordinatesList: any = [];
+  turfArea: any;
 
   constructor(public geoCoordService: GeoCoordinatesService,
     private router: Router, public navParamService: NavParamService,
@@ -126,7 +128,11 @@ export class MapPage implements OnInit {
 
       const updatedlngLat = new mapboxgl.LngLat(coords.longitude, coords.latitude);
 
-      this.coordinatesList.push(updatedlngLat);
+      const marker = new mapboxgl.Marker()
+      .setLngLat([coords.longitude, coords.latitude])
+      .addTo(this.map);
+
+      this.coordinatesList.push([coords.longitude, coords.latitude]);
       // console.log('called');
     });
     // const pinMarker = new mapboxgl.Marker()
@@ -138,6 +144,9 @@ export class MapPage implements OnInit {
   onStopPlotting() {
 
     this.changingPosition.unsubscribe();
+    // this.coordinatesList.forEach(childList => {
+    //   console.log(childList);
+    // });
     console.log(this.coordinatesList);
 
     this.map.addLayer({
@@ -149,7 +158,7 @@ export class MapPage implements OnInit {
           'type': 'Feature',
           'geometry': {
             'type': 'Polygon',
-            'coordinates': this.coordinatesList
+            'coordinates': [this.coordinatesList]
           }
         }
       },
@@ -159,6 +168,15 @@ export class MapPage implements OnInit {
         'fill-opacity': 0.8
         }
     });
+
+    // tslint:disable-next-line:max-line-length
+    const turfPolygon = turf.polygon([this.coordinatesList]);
+
+    this.turfArea = turf.area(turfPolygon);
+
+    const childPlot = this.plotService.getChildPlot(this.childPlotId);
+
+    this.plotService.updateChildPlot(this.childPlotId, this.coordinatesList, this.turfArea);
 
   }
 

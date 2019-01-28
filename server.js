@@ -137,6 +137,28 @@ app.delete("/api/childplots/:id", (req, res, next) => {
   });
 });
 
+app.put("/api/childplots/:id", (req, res, next) => {
+  ChildPlot.replaceOne({ _id: req.params.id },
+    {
+      id: req.body.id,
+      plotName: req.body.plotName,
+      parentPlotId: req.body.parentPlotId,
+      plotLatitude : req.body.plotLatitude,
+      plotLongitude : req.body.plotLongitude,
+      plotPolygon: req.body.plotPolygon,
+      plotArea: req.body.plotArea,
+    })
+    .then(result => {
+      console.log(result);
+      res.status(200).json({
+        message: "From serverjs >>> Plot updated successfully"
+      })
+    })
+    .catch(error => {
+      console.log(error)
+    });
+});
+
  
 app.use(express.static(path.resolve(__dirname, "www")));
 // app.set('port', process.env.PORT || 5000);

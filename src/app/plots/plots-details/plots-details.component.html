@@ -7,7 +7,7 @@
       {{ plot.plotName }}
     </ion-title>
     <ion-buttons slot="end">
-        <ion-button (click)="onTag()">
+        <ion-button (click)="onTag(plot.id)">
             <ion-icon slot="icon-only" name="pin"></ion-icon>
           </ion-button>
           <!-- <ion-button (click)="onAddPlot(plot.id)">
@@ -26,7 +26,14 @@
     <ion-card-header>
       <ion-card-title>
         <ion-card-title> {{ childplot.plotName }} </ion-card-title>
+        <ion-card-subtitle>Total Area: {{ childplot.plotArea }} </ion-card-subtitle>
       </ion-card-title>
+      <ion-buttons flot-right *ngIf="childplot.plotArea > 0">
+          <ion-button>
+              <ion-icon name="checkmark-circle"></ion-icon>
+            </ion-button>
+      </ion-buttons>
+      
     </ion-card-header>
     <ion-card-content>
         <ion-label>{{ childplot.plotLatitude.toPrecision(4) }} </ion-label>
