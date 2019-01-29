@@ -154,7 +154,7 @@ export class MapPage implements OnInit {
   }
 
   onStopPlotting() {
-
+    this.geolocate._geolocateButton.click();
     this.changingPosition.unsubscribe();
     // this.coordinatesList.forEach(childList => {
     //   console.log(childList);
