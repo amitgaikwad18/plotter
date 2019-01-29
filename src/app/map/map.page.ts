@@ -121,10 +121,15 @@ export class MapPage implements OnInit {
 
     // const currentCoords = this.geoCoordService.getCurrentCoordinates();
 
+    this.geolocate._geolocateButton.click();
+
     this.changingPosition = Observable.interval(1000)
     .subscribe(() => {
 
-      this.geolocate._geolocateButton.click();
+      const userlocation = this.geolocate._lastKnownPosition;
+
+      console.log(userlocation.coords.latitude);
+      console.log(userlocation.coords.longitude);
       /**
       const coords = this.geoCoordService.getCurrentCoordinates();
 
