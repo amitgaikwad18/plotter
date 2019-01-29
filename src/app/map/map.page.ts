@@ -123,7 +123,7 @@ export class MapPage implements OnInit {
 
     this.geolocate._geolocateButton.click();
 
-    this.changingPosition = Observable.interval(1000)
+    this.changingPosition = Observable.interval(5000)
     .subscribe(() => {
 
       const userlocation = this.geolocate._lastKnownPosition;
@@ -132,6 +132,8 @@ export class MapPage implements OnInit {
 
       console.log(userlocation.coords.latitude);
       console.log(userlocation.coords.longitude);
+
+      this.coordinatesList.push([userlocation.coords.longitude, userlocation.coords.latitude]);
       /**
       const coords = this.geoCoordService.getCurrentCoordinates();
 
