@@ -32,6 +32,7 @@ export class MapPage implements OnInit {
   changingPosition = new Subscription();
   coordinatesList: any = [];
   turfArea: any;
+  geolocate: any;
 
   constructor(public geoCoordService: GeoCoordinatesService,
     private router: Router, public navParamService: NavParamService,
@@ -91,7 +92,7 @@ export class MapPage implements OnInit {
 
     this.map.addControl(new mapboxgl.NavigationControl());
 
-    const geolocate = new mapboxgl.GeolocateControl({
+    this.geolocate = new mapboxgl.GeolocateControl({
       positionOptions: {
           enableHighAccuracy: true
       },
@@ -122,6 +123,9 @@ export class MapPage implements OnInit {
 
     this.changingPosition = Observable.interval(1000)
     .subscribe(() => {
+
+      this.geolocate._geolocateButton.click();
+      /**
       const coords = this.geoCoordService.getCurrentCoordinates();
 
       console.log(coords.latitude + ' - ' + coords.longitude);
@@ -133,6 +137,7 @@ export class MapPage implements OnInit {
       .addTo(this.map);
 
       this.coordinatesList.push([coords.longitude, coords.latitude]);
+      */
       // console.log('called');
     });
     // const pinMarker = new mapboxgl.Marker()
@@ -173,6 +178,8 @@ export class MapPage implements OnInit {
     const turfPolygon = turf.polygon([this.coordinatesList]);
 
     this.turfArea = turf.area(turfPolygon);
+
+    console.log('Calculated Area >>> ' + this.turfArea);
 
     const childPlot = this.plotService.getChildPlot(this.childPlotId);
 
