@@ -99,7 +99,7 @@ export class MapPage implements OnInit {
       trackUserLocation: true
     });
 
-    this.map.addControl(geolocate);
+    this.map.addControl(this.geolocate);
 
 
     this.map.on('load', () => {
