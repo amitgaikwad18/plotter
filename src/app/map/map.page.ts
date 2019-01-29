@@ -130,8 +130,8 @@ export class MapPage implements OnInit {
 
       console.log(userlocation);
 
-      // console.log(userlocation.coords.latitude);
-      // console.log(userlocation.coords.longitude);
+      console.log(userlocation.coords.latitude);
+      console.log(userlocation.coords.longitude);
       /**
       const coords = this.geoCoordService.getCurrentCoordinates();
 
