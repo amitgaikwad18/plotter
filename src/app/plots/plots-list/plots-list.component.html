@@ -1,6 +1,6 @@
 <ion-list *ngIf="plots.length > 0">
   <!-- <ion-searchbar [(ngModel)]="searchInput" (ionInput)="getItems($event)" showCancelButton placeholder="Find Plots"></ion-searchbar> -->
-  <ion-card *ngFor="let plot of plots" (click)="onViewInfo(plot.id)">
+  <ion-card *ngFor="let plot of plots">
       <ion-card-header>
       <ion-card-title>
         {{ plot.plotName }}
@@ -14,11 +14,15 @@
       <ion-button size="small" fill="outline" color="success" (click)="onAddPlot(plot.id)">
         <ion-icon name="add"></ion-icon>
         Add
-      </ion-button>
-      <ion-button size="small" fill="outline" color="danger" (click)="deletePlot(plot.id)">
+      </ion-button> -->
+      <ion-button color="danger" (click)="deletePlot(plot.id)">
         <ion-icon name="trash"></ion-icon>
         Delete
-      </ion-button> -->
+      </ion-button>
+      <ion-button color="primary" (click)="onViewInfo(plot.id)">
+          <ion-icon name="eye"></ion-icon>
+          View
+        </ion-button>
     </ion-card-content>
   </ion-card>
 </ion-list>

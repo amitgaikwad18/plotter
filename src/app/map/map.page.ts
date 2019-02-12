@@ -36,7 +36,8 @@ export class MapPage implements OnInit {
 
   constructor(public geoCoordService: GeoCoordinatesService,
     private router: Router, public navParamService: NavParamService,
-    public plotService: PlotService, public geolocation: Geolocation) {
+    public plotService: PlotService, public geolocation: Geolocation,
+    private routeCtrl: Router) {
     mapboxgl.accessToken = environment.mapbox.accessToken;
   }
 
@@ -122,8 +123,9 @@ export class MapPage implements OnInit {
     // const currentCoords = this.geoCoordService.getCurrentCoordinates();
 
     this.geolocate._geolocateButton.click();
+    // this.geolocate.trigger();
 
-    this.changingPosition = Observable.interval(5000)
+    this.changingPosition = Observable.interval(1000)
     .subscribe(() => {
 
       const userlocation = this.geolocate._lastKnownPosition;
@@ -134,37 +136,18 @@ export class MapPage implements OnInit {
       console.log(userlocation.coords.longitude);
 
       this.coordinatesList.push([userlocation.coords.longitude, userlocation.coords.latitude]);
-      /**
-      const coords = this.geoCoordService.getCurrentCoordinates();
-
-      console.log(coords.latitude + ' - ' + coords.longitude);
-
-      const updatedlngLat = new mapboxgl.LngLat(coords.longitude, coords.latitude);
-
-      const marker = new mapboxgl.Marker()
-      .setLngLat([coords.longitude, coords.latitude])
-      .addTo(this.map);
-
-      this.coordinatesList.push([coords.longitude, coords.latitude]);
-      */
-      // console.log('called');
+     
     });
-    // const pinMarker = new mapboxgl.Marker()
-    // .setLngLat([currentCoords.longitude, currentCoords.latitude])
-    // .addTo(this.map);
-
+   
   }
 
   onStopPlotting() {
     this.geolocate._geolocateButton.click();
     this.changingPosition.unsubscribe();
-    // this.coordinatesList.forEach(childList => {
-    //   console.log(childList);
-    // });
     console.log(this.coordinatesList);
 
     this.map.addLayer({
-      'id': 'plot',
+      'id': Math.random().toString(36).substring(7),
       'type': 'fill',
       'source': {
         'type': 'geojson',
@@ -194,6 +177,8 @@ export class MapPage implements OnInit {
 
     this.plotService.updateChildPlot(this.childPlotId, this.coordinatesList, this.turfArea);
 
+    this.navParamService.plotId = this.plotId;
+    this.routeCtrl.navigate(['/plotdetails']);
   }
 
   // async showAlert(img: any) {

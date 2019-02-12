@@ -40,9 +40,18 @@
         <ion-label>{{ childplot.plotLongitude.toPrecision(4) }} </ion-label>
     </ion-card-content>
     <ion-buttons float-right>
-      <ion-button fill="outline" color="danger" (click)="deleteChildPlots(childplot.id)">Delete</ion-button>
-      <ion-button fill="outline" color="primary">View</ion-button>
-      <ion-button fill="outline" color="secondary" (click)="onPlot(childplot.id)">Plot</ion-button>
+      <ion-button color="danger" (click)="deleteChildPlots(childplot.id)">
+        <ion-icon name="trash"></ion-icon>
+        Delete
+      </ion-button>
+      <ion-button color="primary">
+        <ion-icon name="eye"></ion-icon>
+        View
+      </ion-button>
+      <ion-button color="secondary" (click)="onPlot(childplot.id)">
+        <ion-icon name="walk"></ion-icon>
+        Plot
+      </ion-button>
     </ion-buttons>
   </ion-card>
 </ion-list>
