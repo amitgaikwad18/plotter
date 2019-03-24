@@ -193,8 +193,8 @@ export class MapPage implements OnInit {
 
     this.plotService.updateChildPlot(this.childPlotId, this.coordinatesList, this.turfArea, this.screenshot);
 
-    // this.navParamService.plotId = this.plotId;
-    // this.routeCtrl.navigate(['/plotdetails']);
+    this.navParamService.plotId = this.plotId;
+    this.routeCtrl.navigate(['/plotdetails']);
   }
 
   // async showAlert(img: any) {

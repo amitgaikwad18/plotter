@@ -95,6 +95,7 @@ export class PlotService {
                     plotLongitude: childPlot.plotLongitude,
                     plotPolygon: childPlot.plotPolygon,
                     plotarea: childPlot.plotArea,
+                    plotImgData: childPlot.plotImgData,
                 };
             });
         }))
