@@ -6,4 +6,5 @@ export interface ChildPlot {
     plotLatitude: number;
     plotPolygon: string[];
     plotArea: number;
+    plotImgData: string;
 }

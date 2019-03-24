@@ -13,14 +13,14 @@
           <!-- <ion-button (click)="onAddPlot(plot.id)">
             <ion-icon slot="icon-only" name="add"></ion-icon>
           </ion-button> -->
-          <ion-button ion-only>
+          <!-- <ion-button ion-only>
               <ion-icon slot="icon-only" name="more"></ion-icon>
-          </ion-button>
+          </ion-button> -->
     </ion-buttons>
 </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-list>
+  <ion-list *ngIf="childPlots.length > 0">
   <ion-card *ngFor="let childplot of childPlots">
       <!-- <img class="image-content" src="../../../assets/icon/world.png"> -->
     <ion-card-header>
@@ -33,9 +33,11 @@
               <ion-icon name="checkmark-circle"></ion-icon>
             </ion-button>
       </ion-buttons>
-      
     </ion-card-header>
     <ion-card-content>
+      <ion-item>
+        <img src="{{childplot.plotImgData}}" alt="">
+      </ion-item>
         <ion-label>{{ childplot.plotLatitude.toPrecision(4) }} </ion-label>
         <ion-label>{{ childplot.plotLongitude.toPrecision(4) }} </ion-label>
     </ion-card-content>

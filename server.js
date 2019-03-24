@@ -13,8 +13,8 @@ const Plot = require("./backend/model/plot");
 const ChildPlot = require("./backend/model/childplot");
  
 app.use(morgan("dev"));                                        
-app.use(bodyParser.urlencoded({"extended":"true"}));            
-app.use(bodyParser.json());                                     
+app.use(bodyParser.urlencoded({"limit": "10mb", "extended":"true"}));            
+app.use(bodyParser.json({"limit": "50mb", "extended": "true"}));                                     
 app.use(cors());
  
 app.use(function(req, res, next) {
@@ -147,6 +147,7 @@ app.put("/api/childplots/:id", (req, res, next) => {
       plotLongitude : req.body.plotLongitude,
       plotPolygon: req.body.plotPolygon,
       plotArea: req.body.plotArea,
+      plotImgData: req.body.plotImgData
     })
     .then(result => {
       console.log(result);

@@ -34,6 +34,8 @@ export class MapPage implements OnInit {
   turfArea: any;
   geolocate: any;
 
+  screenshot: any;
+
   constructor(public geoCoordService: GeoCoordinatesService,
     private router: Router, public navParamService: NavParamService,
     public plotService: PlotService, public geolocation: Geolocation,
@@ -85,6 +87,7 @@ export class MapPage implements OnInit {
       style: 'mapbox://styles/mapbox/streets-v9',
       center: this.lnglat,
       zoom: 15,
+      preserveDrawingBuffer: true
     });
 
     // const marker = new mapboxgl.Marker()
@@ -136,9 +139,8 @@ export class MapPage implements OnInit {
       console.log(userlocation.coords.longitude);
 
       this.coordinatesList.push([userlocation.coords.longitude, userlocation.coords.latitude]);
-     
+
     });
-   
   }
 
   onStopPlotting() {
@@ -166,6 +168,11 @@ export class MapPage implements OnInit {
         }
     });
 
+    this.screenshot = this.map.getCanvas().toDataURL();
+
+    console.log(this.screenshot);
+
+    // $('#mapscreenshot').append();
     // tslint:disable-next-line:max-line-length
     const turfPolygon = turf.polygon([this.coordinatesList]);
 
@@ -175,10 +182,10 @@ export class MapPage implements OnInit {
 
     const childPlot = this.plotService.getChildPlot(this.childPlotId);
 
-    this.plotService.updateChildPlot(this.childPlotId, this.coordinatesList, this.turfArea);
+    this.plotService.updateChildPlot(this.childPlotId, this.coordinatesList, this.turfArea, this.screenshot);
 
-    this.navParamService.plotId = this.plotId;
-    this.routeCtrl.navigate(['/plotdetails']);
+    // this.navParamService.plotId = this.plotId;
+    // this.routeCtrl.navigate(['/plotdetails']);
   }
 
   // async showAlert(img: any) {

@@ -128,6 +128,7 @@ export class PlotService {
             plotLongitude: plotLongitude,
             plotArea: null,
             plotPolygon: null,
+            plotImgData: null
         };
         this.httpClient
         .post<{message: string, childPlotId: string}>(environment.app_url + '/api/childplot', newChildPlot)
@@ -150,11 +151,12 @@ export class PlotService {
         });
     }
 
-    updateChildPlot(plotId: string, plotPolygon: string[], plotArea: number) {
+    updateChildPlot(plotId: string, plotPolygon: string[], plotArea: number, plotImgData: string) {
 
         const updatedChildPlot = this.childPlots.find(childPlot => childPlot.id === plotId);
         updatedChildPlot.plotPolygon = plotPolygon;
         updatedChildPlot.plotArea = plotArea;
+        updatedChildPlot.plotImgData = plotImgData;
         this.httpClient
         .put<{message: string, plotId: string}>(environment.app_url + '/api/childplots/' + plotId, updatedChildPlot)
         .subscribe(() => {

@@ -13,6 +13,8 @@ import { PlotsCreateModule } from './plots/plots-create/plots-create.component.m
 import { PlotsListModule } from './plots/plots-list/plots-list.component.module';
 import { PlotsDetailsModule } from './plots/plots-details/plots-details.component.module';
 import { PlotsChildModule } from './plots/plots-child/plots-child.component.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +28,7 @@ import { PlotsChildModule } from './plots/plots-child/plots-child.component.modu
     HttpClientModule,
     PlotsDetailsModule,
     PlotsChildModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     StatusBar,
