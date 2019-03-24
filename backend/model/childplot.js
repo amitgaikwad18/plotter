@@ -7,7 +7,7 @@ const childPlotSchema = new mongoose.Schema({
     plotLongitude: {type: Number, required: true},
     plotPolygon: {type: String, value:[String]},
     plotArea: {type: Number},
-    plotImgData: {type: String}
+    plotImgData: {type: String},
 
 });
 
